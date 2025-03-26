@@ -40,6 +40,10 @@ By using map_unordered() rather than the basic map() for multiprocessing the pro
 *   Combine results from each chunk after procesing.
 
 # 2. Implementation of Parallel Processing
+
+Python code that processes th AIS data in parallel for efficient computation is in the file "AISParallelProcessing.py". THe function detect_gps_spoofing(vessel_data) will have to be modified for real GPS spoofing detection. In this function I have simply sat a constant limit for the change in latitude, longitude and speed between two timestamps for each vessle, not even taking into account the time between timestamps. This limit is the same for all vessels and has been chosen by simply reducing the number of possible spoofing cases detected. 
+ 
+ # 3. GPS Spoofing Detection
 The implementation of Parallel Processing is in the file "SpoofingDetection.py". To find potential GPS Spoofing events I used the IQR method for detecting outliers. IQR is resilient to extreme outliers and non-parametric, so it works regardless of the data's distribution. But yet I found verry many outliers and I do not think spoofing is that frequent. 
 
 # 4. Evaluating Parallel Processing Efficiency
