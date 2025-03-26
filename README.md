@@ -23,9 +23,6 @@ http://web.ais.dk/aisdata/
 
 
 # 1. Parallel Splitting of the Task
-Objective: Strategize the division of AIS data processing into parallelizable sub-tasks.
-
-Guidance: Discuss different parallel computing techniques, such as data parallelism or task parallelism. Ensure workload balancing among parallel tasks.
 
 ### Parallel Computing Techniques
 One of the most widely used classifications of parallel computing techniques is Flynn’s Taxonomy. This taxonomy defines four main types of computing architectures:
@@ -49,7 +46,7 @@ By using map_unordered() rather than the basic map() for multiprocessing the pro
 
 ### Strategized division of AIS data processing into parallelizable sub-tasks.
 
-Strategy:
+#### Strategy:
 *   Load the data (and load sample data (nrows = 100000) to use whilst working to create a better workflow)
 *   Split the data into smaller chunks that can be processed in parallel.
   *  For GPS spooing detection the chunks will contain only the data from a single vessel. 
@@ -62,12 +59,10 @@ Objective: Develop Python code to process the AIS data in parallel for efficient
 
 Guidance: Utilize Python libraries for parallel processing.
 
+Python code that processes th AIS data in parallel for efficient computation is in the file "AISParallelProcessing.py". THe function detect_gps_spoofing(vessel_data) will have to be modified for real GPS spoofing detection. In this function I have simply sat a constant limit for the change in latitude, longitude and speed between two timestamps for each vessle, not even taking into account the time between timestamps. This limit is the same for all vessels and has been chosen by simply reducing the number of possible spoofing cases detected. 
+
 # 3. GPS Spoofing Detection
 GPS spoofing is a technique in which someone deliberately manipulates GPS signals, causing receivers to display false location or time data. This can have serious consequences for maritime navigation and security.
-
-The implementation of Parallel Processing is in the file "getspoofed.py" 
-
-THe function detect_gps_spoofing(vessel_data) will have to be edited for real GPS spoofing detection. In this function I have simply sat a constant limit for the change in latitude, longitude and speed between two timestamps for each vessle. This limit is the same for all vessels and has been chosen by simply reducing the number of possible spoofing cases detected. 
 
 ## A. Identifying Location Anomalies:
 
@@ -79,7 +74,7 @@ Identify vessels with inconsistent speed changes or impossible travel distances 
 
 Check if multiple vessels in the same region report conflicting GPS positions.
 
-
+The implementation of Parallel Processing is in the file "SpoofingDetection.py" 
 
 # 4. Evaluating Parallel Processing Efficiency
 Objective: Measure and evaluate the performance efficiency of parallelized processing techniques.
