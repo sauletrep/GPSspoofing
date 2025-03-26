@@ -14,9 +14,8 @@ def data(file_path):
     sample_df.columns = sample_df.columns.str.strip("# ") # Remove trailing whitespaces and "#" from column names
 
     # Step 3: Load full dataset with panda using inferred dtypes
-    #df = pd.read_csv(file_path, dtype=inferred_dtypes) # Read full dataset with inferred dtypes
-    #df.columns = df.columns.str.strip("# ") 
-    df = sample_df
+    df = pd.read_csv(file_path, dtype=inferred_dtypes) # Read full dataset with inferred dtypes
+    df.columns = df.columns.str.strip("# ") 
 
     # Show column names 
     print("Column Names:") 
