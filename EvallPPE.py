@@ -15,9 +15,8 @@ def data(file_path):
     sample_df.columns = sample_df.columns.str.strip("# ") # Remove trailing whitespaces and "#" from column names
 
     # Step 3: Load full dataset with panda using inferred dtypes
-    #df = pd.read_csv(file_path, dtype=inferred_dtypes) # Read full dataset with inferred dtypes
-    #df.columns = df.columns.str.strip("# ") 
-    df = sample_df
+    df = pd.read_csv(file_path, dtype=inferred_dtypes) # Read full dataset with inferred dtypes
+    df.columns = df.columns.str.strip("# ") 
 
     # Show column names 
     print("Column Names:") 
@@ -97,7 +96,7 @@ def process_vessels_parallel(data, cpu_count, chunksize=4):
     grouped_vessels = [group for _, group in data.groupby("MMSI")]
     
     with mp.Pool(processes=cpu_count) as pool:
-        spoofing_results = pool.map(detect_gps_spoofing, grouped_vessels, chunksize=chunksize)
+        spoofing_results = pool.imap_unordered(detect_gps_spoofing, grouped_vessels, chunksize=chunksize)
     
     return pd.concat(spoofing_results)
 
