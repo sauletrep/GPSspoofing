@@ -7,21 +7,6 @@ Analyze vessel tracking data from AIS records using parallel processing techniqu
 ## Dataset: 25.08.2024
 http://web.ais.dk/aisdata/  
 
-## Submission and Presentation
-* Deadline: All tasks (1-4) must be completed and submitted by the specified end date and time.
-* Presentation Format: Up to 5 slides covering solutions to tasks 1-4.
-* Requirement: Students must submit their code to a specified code repository (GitHub, GitLab).
-
-### Evaluation Criteria
-
-* Category -> Description
-* Code Quality -> Clarity, efficiency, and correctness of the implementation.
-* GPS Spoofing Detection ->	Accuracy and effectiveness in detecting spoofing events.
-* Performance Analysis -> Depth of parallel processing efficiency evaluation, speedup calculations, and visualization of results.
-* Use of Vilnius University HPC (+1 Point)	-> Proper execution and documentation of results on the HPC system.
-* Presentation ->	Clarity and conciseness in explaining the solution.
-
-
 # 1. Parallel Splitting of the Task
 
 ### Parallel Computing Techniques
@@ -47,7 +32,7 @@ By using map_unordered() rather than the basic map() for multiprocessing the pro
 ### Strategized division of AIS data processing into parallelizable sub-tasks.
 
 #### Strategy:
-*   Load the data (and load sample data (nrows = 100000) to use whilst working to create a better workflow)
+*   Load the data (and load sample data (nrows = 100000000) to use whilst working to create a better workflow)
 *   Split the data into smaller chunks that can be processed in parallel.
   *  For GPS spooing detection the chunks will contain only the data from a single vessel. 
 *   Use multiprocessing to process each chunk in parallel.
@@ -55,42 +40,13 @@ By using map_unordered() rather than the basic map() for multiprocessing the pro
 *   Combine results from each chunk after procesing.
 
 # 2. Implementation of Parallel Processing
-Objective: Develop Python code to process the AIS data in parallel for efficient computation.
-
-Guidance: Utilize Python libraries for parallel processing.
-
-Python code that processes th AIS data in parallel for efficient computation is in the file "AISParallelProcessing.py". THe function detect_gps_spoofing(vessel_data) will have to be modified for real GPS spoofing detection. In this function I have simply sat a constant limit for the change in latitude, longitude and speed between two timestamps for each vessle, not even taking into account the time between timestamps. This limit is the same for all vessels and has been chosen by simply reducing the number of possible spoofing cases detected. 
-
-# 3. GPS Spoofing Detection
-GPS spoofing is a technique in which someone deliberately manipulates GPS signals, causing receivers to display false location or time data. This can have serious consequences for maritime navigation and security.
-
-## A. Identifying Location Anomalies:
-
-Detect sudden, unrealistic location jumps that deviate significantly from expected vessel movement patterns.
-## B. Analyzing Speed and Course Consistency:
-
-Identify vessels with inconsistent speed changes or impossible travel distances within a short time.
-## C. Comparing Neighboring Vessel Data:
-
-Check if multiple vessels in the same region report conflicting GPS positions.
-
-The implementation of Parallel Processing is in the file "SpoofingDetection.py" 
+The implementation of Parallel Processing is in the file "SpoofingDetection.py". To find potential GPS Spoofing events I used the IQR method for detecting outliers. IQR is resilient to extreme outliers and non-parametric, so it works regardless of the data's distribution. But yet I found verry many outliers and I do not think spoofing is that frequent. 
 
 # 4. Evaluating Parallel Processing Efficiency
-Objective: Measure and evaluate the performance efficiency of parallelized processing techniques.
+The python code that measures and evaluates the performance efficiency of parallelized processing techniques is in the file "EvallPPE.py". It showes that the parallel implementation does reduce the execution time in comparison to the sequential implementation. The speedup is 2.17. From 1 to 2 to 4 CPUs the performance improve significantly. Whilst from 4 to 8 CPUs there is not much of an improvment timewise. The chunk size has a different effect on the time for the tested numbers of CPUs.
 
-Guidance:
-
-*   Compare execution time between sequential and parallel implementations.
-*   Use speedup analysis: Speedup=Time (sequential)Time (parallel)\text{Speedup} = \frac{\text{Time (sequential)}}{\text{Time (parallel)}}Speedup=Time (parallel)Time (sequential)
-*   Analyze CPU and memory usage across different numbers of parallel workers.
-*   Test different numbers of CPUs and chunk sizes and compare their impact on execution time.
-*   Visualize results in a graph showing performance improvements across configurations.
-*   Bonus (+1 point): Students who execute their code on the Vilnius University HPC system and document their experience will receive an additional +1 grade to their task score.
-
+![CPU_ParallelExecutionTime](https://github.com/user-attachments/assets/c62ff1d2-df8b-4566-bc76-87f024bfd5dc)
 
 
 # 5. Presentation of the Solution
-Objective: Effectively present the solution to the GPS spoofing detection task.
-
-Guidance: Clearly explain the implemented techniques, performance improvements, and findings in a structured manner.
+The presentation of the solution can be found in the file "AISpresentation.pptx" that will be presented at the specified date and time. 
